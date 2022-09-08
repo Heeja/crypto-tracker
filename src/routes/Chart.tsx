@@ -6,6 +6,7 @@ import { isDarkAtom } from "../atoms";
 
 interface ChartProps {
   coinId: string;
+  symbol?: string;
 }
 
 interface IHistorical {
@@ -19,7 +20,7 @@ interface IHistorical {
   market_cap: number;
 }
 
-function Chart({ coinId }: ChartProps) {
+function Chart({ coinId, symbol }: ChartProps) {
   const isDark = useRecoilValue(isDarkAtom);
 
   const { isLoading, data } = useQuery<IHistorical[]>(
@@ -30,33 +31,40 @@ function Chart({ coinId }: ChartProps) {
     }
   );
 
+  const songilData = data ?? [];
+  const usingData = songilData?.map((price) => {
+    return {
+      x: price.time_close,
+      y: [price.open, price.high, price.low, price.close],
+    };
+  });
+
   return (
     <>
       {isLoading ? (
         "Loading Chart..."
       ) : (
         <ApexChart
-          type="line"
+          type="candlestick"
           series={[
             {
-              name: "price",
-              data: data?.map((price) => parseFloat(price.close)) ?? [],
-              // data: [72, 112, 3, 30, 45, 1002],
+              data: usingData,
+              // 외부데이터로 가져왔을때 에러가 없었다.
             },
           ]}
           options={{
             theme: {
               mode: isDark ? "dark" : "light",
             },
+            title: {
+              text: `${symbol} Candle Chart`,
+              align: "left",
+            },
             chart: {
               height: 500,
               width: 500,
               toolbar: { show: false },
               background: "transparent",
-            },
-            stroke: {
-              curve: "smooth",
-              width: 6,
             },
             yaxis: {
               show: false,
