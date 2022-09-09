@@ -5,6 +5,7 @@ import {
   useLocation,
   useMatch,
   Link,
+  NavLink,
 } from "react-router-dom";
 import styled from "styled-components";
 import { useQuery } from "@tanstack/react-query";
@@ -16,6 +17,15 @@ import Chart from "./Chart";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { isDarkAtom } from "../atoms";
+
+const PrtNavLink = styled(NavLink)`
+  color: #ffdda6;
+  background-color: #8c8cff;
+  border-radius: 5px;
+  padding: 6px;
+  position: absolute;
+  right: 30px !important;
+`;
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -175,7 +185,6 @@ interface ICoinProps {}
 
 function Coin() {
   const { coinId } = useParams() as unknown as RouteParams;
-  const { state } = useLocation() as RouteState;
   const priceMatch = useMatch(`/:coinId/price`);
   const chartMatch = useMatch(`/:coinId/chart`);
 
@@ -225,6 +234,7 @@ function Coin() {
         <button onClick={toggleDarkAtom}>
           {isDark ? "Dark Mode" : "Light Mode"}
         </button>
+        <PrtNavLink to="/"> Home </PrtNavLink>
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
@@ -268,11 +278,15 @@ function Coin() {
           </Tabs>
 
           <Routes>
-            <Route path="price" element={<Price />} />
+            <Route
+              path="price"
+              element={<Price coinId={coinId} symbol={infoData?.symbol} />}
+            />
             <Route
               path="chart"
               element={<Chart coinId={coinId} symbol={infoData?.symbol} />}
             />
+            <Route path="coins" />
           </Routes>
         </>
       )}
