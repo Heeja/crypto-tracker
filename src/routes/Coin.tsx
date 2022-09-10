@@ -2,7 +2,6 @@ import {
   Routes,
   Route,
   useParams,
-  useLocation,
   useMatch,
   Link,
   NavLink,
@@ -105,9 +104,6 @@ const Tab = styled.span<{ isActive: boolean }>`
 interface RouteParams {
   coinId: string;
 }
-interface RouteState {
-  state: string;
-}
 
 interface InfoTag {
   id: string;
@@ -181,8 +177,6 @@ interface PriceData {
   total_supply: number;
 }
 
-interface ICoinProps {}
-
 function Coin() {
   const { coinId } = useParams() as unknown as RouteParams;
   const priceMatch = useMatch(`/:coinId/price`);
@@ -223,6 +217,8 @@ function Coin() {
   const toggleDarkAtom = () => setDartAtom((prev) => !prev);
   const isDark = useRecoilValue(isDarkAtom);
 
+  const usdPrice = tickersData?.quotes.USD.price.toFixed(4);
+
   return (
     <Container>
       <Helmet>
@@ -251,7 +247,7 @@ function Coin() {
             </BoxItem>
             <BoxItem>
               <span>open source:</span>
-              <span>{tickersData?.quotes.USD.price.toFixed(5)}</span>
+              <span>{usdPrice}</span>
             </BoxItem>
           </ColorBox>
           <Description>
