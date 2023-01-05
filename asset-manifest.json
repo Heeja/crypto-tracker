@@ -1,10 +1,12 @@
 {
   "files": {
-    "main.js": "/crypto-tracker/static/js/main.100494c5.js",
-    "index.html": "/crypto-tracker/index.html",
-    "main.100494c5.js.map": "/crypto-tracker/static/js/main.100494c5.js.map"
+    "main.js": "/react-learn_mst/static/js/main.02df9575.js",
+    "static/media/mainPoster.jpeg": "/react-learn_mst/static/media/mainPoster.8f480ed9ad463f9023fb.jpeg",
+    "static/media/coins.jpeg": "/react-learn_mst/static/media/coins.35dcc57ca474ba54a78b.jpeg",
+    "index.html": "/react-learn_mst/index.html",
+    "main.02df9575.js.map": "/react-learn_mst/static/js/main.02df9575.js.map"
   },
   "entrypoints": [
-    "static/js/main.100494c5.js"
+    "static/js/main.02df9575.js"
   ]
 }
